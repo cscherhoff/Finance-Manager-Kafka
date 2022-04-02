@@ -233,6 +233,49 @@
 					"response": []
 				},
 				{
+					"name": "Get categories after allocation update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test response and status\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.body('[{\"name\":\"Haushalt\",\"budget\":301.47,\"currentBudget\":301.47},{\"name\":\"Reisen\",\"budget\":99.25,\"currentBudget\":99.25}]');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"setTimeout(() => {}, 10000);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{expensePort}}/categories/user/123",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{expensePort}}",
+							"path": [
+								"categories",
+								"user",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Get allocation after update",
 					"event": [
 						{
@@ -405,6 +448,205 @@
 								"allocation",
 								"user",
 								"123"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Expenses",
+			"item": [
+				{
+					"name": "Post expense with overriding  the defaults",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test response and status\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.have.body('[{\"date\":\"2021-05-22\",\"article\":\"Batterien\",\"category\":\"Haushalt\",\"amount\":12.34,\"price\":11.11,\"overrideDefaults\":true}]');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\"date\":\"2021-05-22\",\"article\":\"Batterien\",\"category\":\"Haushalt\",\"amount\":12.34,\"price\":11.11,\"overrideDefaults\":true}]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{expensePort}}/expense/user/123/accountName/{{girokontoName}}?overrideDefault=true",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{expensePort}}",
+							"path": [
+								"expense",
+								"user",
+								"123",
+								"accountName",
+								"{{girokontoName}}"
+							],
+							"query": [
+								{
+									"key": "overrideDefault",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post expense without overriding  the defaults",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test response and status\", function () {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.have.body('[{\"date\":\"2021-05-22\",\"article\":\"Batterien\",\"category\":\"Haushalt\",\"amount\":12.34,\"price\":21.41,\"overrideDefaults\":false}]');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\"date\":\"2021-05-22\",\"article\":\"Batterien\",\"category\":\"Haushalt\",\"amount\":12.34,\"price\":21.41,\"overrideDefaults\":false}]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{expensePort}}/expense/user/123/accountName/{{girokontoName}}?overrideDefault=false",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{expensePort}}",
+							"path": [
+								"expense",
+								"user",
+								"123",
+								"accountName",
+								"{{girokontoName}}"
+							],
+							"query": [
+								{
+									"key": "overrideDefault",
+									"value": "false"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all expenses",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test response and status\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.have.body('[{\"date\":\"2021-05-22\",\"article\":\"Batterien\",\"category\":\"Haushalt\",\"amount\":12.34,\"price\":11.11},{\"date\":\"2021-05-22\",\"article\":\"Batterien\",\"category\":\"Haushalt\",\"amount\":12.34,\"price\":21.41}]');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{host}}:{{expensePort}}/expense/user/123",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{expensePort}}",
+							"path": [
+								"expense",
+								"user",
+								"123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post expense with invalid user id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Test response and status\", function () {\r",
+									"    pm.response.to.have.status(500);\r",
+									"    const responseJson = pm.response.json();\r",
+									"    pm.expect(responseJson.message).to.eql('500 INTERNAL_SERVER_ERROR \\\"Could not find the category Haushalt in the database for the user id 123456\\\"');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\"date\":\"2021-05-22\",\"article\":\"Batterien\",\"category\":\"Haushalt\",\"amount\":222.34,\"price\":2122.41,\"overrideDefaults\":false}]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{host}}:{{expensePort}}/expense/user/123456/accountName/{{girokontoName}}?overrideDefault=false",
+							"host": [
+								"{{host}}"
+							],
+							"port": "{{expensePort}}",
+							"path": [
+								"expense",
+								"user",
+								"123456",
+								"accountName",
+								"{{girokontoName}}"
+							],
+							"query": [
+								{
+									"key": "overrideDefault",
+									"value": "false"
+								}
 							]
 						}
 					},
