@@ -7,18 +7,24 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="allocator-service-ms" />
+        <module name="expense-manager-ms" />
         <module name="allocator-service" />
+        <module name="expense-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="allocator-service" target="11" />
       <module name="allocator-service-ms" target="11" />
+      <module name="expense-manager-ms" target="11" />
+      <module name="expense-service" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="allocator-service" options="-parameters" />
       <module name="allocator-service-ms" options="-parameters" />
+      <module name="expense-manager-ms" options="-parameters" />
+      <module name="expense-service" options="-parameters" />
     </option>
   </component>
 </project>

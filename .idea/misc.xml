@@ -5,6 +5,8 @@
       <list>
         <option value="$PROJECT_DIR$/allocator-service-ms/pom.xml" />
         <option value="$PROJECT_DIR$/allocator-service-ms/allocator-service/pom.xml" />
+        <option value="$PROJECT_DIR$/expense-manager-ms/pom.xml" />
+        <option value="$PROJECT_DIR$/expense-manager-ms/expense-service/pom.xml" />
       </list>
     </option>
   </component>
