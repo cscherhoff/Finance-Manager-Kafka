@@ -17,9 +17,20 @@ services:
     build: .\allocator-service-ms
     ports:
       - 8085:8085
+    container_name: allocator-service
     environment:
       spring.datasource.url: jdbc:mysql://database-service:3306/finance_kafka_test?characterEncoding=utf8&serverTimezone=CET&createDatabaseIfNotExist=true
       spring.datasource.username: root
       spring.datasource.password: root
+  expense-service:
+    restart: on-failure
+    build: .\expense-manager-ms
+    ports:
+      - 8083:8083
+    container_name: expense-service
+    environment:
+      spring.datasource.url: jdbc:mysql://database-service:3306/finance_kafka_test?characterEncoding=utf8&serverTimezone=CET&createDatabaseIfNotExist=true
+      spring.datasource.username: root
+      spring.datasource.password: rootAd
 #volumes:
 #  dbdata:
