@@ -12,6 +12,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                   bat "docker rmi -f finance_kafka_test_allocator-service"
+                  bat "docker rmi -f finance_kafka_test_expense-service"
                 }
             }
         }
@@ -20,6 +21,10 @@ pipeline {
                 bat """cd allocator-service-ms/allocator-service
                 mvn clean install"""
 				bat """cd allocator-service-ms
+                mvn clean package"""
+                bat """cd expense-manager-ms/expense-service
+                mvn clean install"""
+                bat """cd expense-manager-ms
                 mvn clean package"""
             }
         }
