@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Finance-Manager-Kafka.iml" filepath="$PROJECT_DIR$/Finance-Manager-Kafka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/allocator-service-ms/allocator-service/allocator-service.iml" filepath="$PROJECT_DIR$/allocator-service-ms/allocator-service/allocator-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/allocator-service-ms/allocator-service-ms.iml" filepath="$PROJECT_DIR$/allocator-service-ms/allocator-service-ms.iml" />
     </modules>
   </component>
 </project>
