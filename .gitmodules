@@ -4,3 +4,6 @@
 [submodule "expense-manager-ms"]
 	path = expense-manager-ms
 	url = https://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@github.com/cscherhoff/expense-manager-ms
+[submodule "investment-service-kafka"]
+	path = investment-service-kafka
+	url = https://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@github.com/cscherhoff/investment-service-kafka

@@ -7,5 +7,8 @@
     <file url="file://$PROJECT_DIR$/expense-manager-ms/expense-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/expense-manager-ms/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/expense-manager-ms/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/investment-service-kafka/investment-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/investment-service-kafka/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/investment-service-kafka/src/main/resources" charset="UTF-8" />
   </component>
 </project>
