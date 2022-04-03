@@ -35,6 +35,7 @@ services:
       spring.datasource.password: root
       spring.kafka.consumer.bootstrap-servers: kafka:29092
   investment-service:
+    restart: on-failure
     build: .\investment-service-kafka
     ports:
       - 8069:8069
