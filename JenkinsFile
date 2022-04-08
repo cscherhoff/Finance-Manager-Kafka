@@ -14,6 +14,8 @@ pipeline {
                   bat "docker rmi -f finance_kafka_test_allocator-service"
                   bat "docker rmi -f finance_kafka_test_expense-service"
                   bat "docker rmi -f finance_kafka_test_investment-service"
+                  bat "docker rmi -f finance_kafka_test_naming-service"
+                  bat "docker rmi -f finance_kafka_test_user-service"
                 }
             }
         }
@@ -31,9 +33,13 @@ pipeline {
                 mvn clean install"""
                 bat """cd investment-service-kafka
                 mvn clean package"""
+                bat """cd Eureka
+                mvn clean package"""
+                bat """cd finance-user-service
+                mvn clean package"""
             }
         }
-        stage("Docker webApplication") {
+        stage("Start container in Docker") {
             steps {
                 bat "docker-compose -p finance_kafka_test -f docker-compose.yml up -d"
             }
