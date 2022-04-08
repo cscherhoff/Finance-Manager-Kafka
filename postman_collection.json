@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "User registration and authentification Copy",
+			"name": "User registration and authentification",
 			"item": [
 				{
 					"name": "Register new user",
@@ -1857,6 +1857,86 @@
 			]
 		},
 		{
+			"name": "User registration and authentification 2",
+			"item": [
+				{
+					"name": "Register new user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"cedricTest2\", \"password\":\"ichbineinpw%\", \"role\":\"ROLE_ADMIN\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{userServicePort}}/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{userServicePort}}",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authentifiaction",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"token\", jsonData.token);\r",
+									"\r",
+									"pm.test(\"Test response and status\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"cedricTest2\", \"password\":\"ichbineinpw%\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{userServicePort}}/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{userServicePort}}",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Investment-Dividend",
 			"item": [
 				{
@@ -2413,7 +2493,7 @@
 		},
 		{
 			"key": "userIdInveDivi",
-			"value": "1"
+			"value": "2"
 		},
 		{
 			"key": "token",
