@@ -1,10 +1,90 @@
 {
 	"info": {
-		"_postman_id": "e1a508e8-7910-402b-bab8-3a106b202121",
-		"name": "Finance App MS KAFKA",
+		"_postman_id": "4824a51c-2e1c-4ef4-b6a1-2d58f0c46459",
+		"name": "Finance App MS KAFKA Auth",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
+		{
+			"name": "User registration and authentification Copy",
+			"item": [
+				{
+					"name": "Register new user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"cedricTest\", \"password\":\"ichbineinpw%\", \"role\":\"ROLE_ADMIN\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{userServicePort}}/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{userServicePort}}",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authentifiaction",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"token\", jsonData.token);\r",
+									"\r",
+									"pm.test(\"Test response and status\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"username\":\"cedricTest\", \"password\":\"ichbineinpw%\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{userServicePort}}/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{userServicePort}}",
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
 		{
 			"name": "Allocation",
 			"item": [
@@ -40,7 +120,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{allocationPort}}/income/user/123",
+							"raw": "{{host}}:{{allocationPort}}/income/user/{{userId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -48,7 +128,7 @@
 							"path": [
 								"income",
 								"user",
-								"123"
+								"{{userId}}"
 							]
 						}
 					},
@@ -83,7 +163,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{allocationPort}}/income/user/123",
+							"raw": "{{host}}:{{allocationPort}}/income/user/{{userId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -91,7 +171,7 @@
 							"path": [
 								"income",
 								"user",
-								"123"
+								"{{userId}}"
 							]
 						}
 					},
@@ -129,7 +209,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{allocationPort}}/income/user/123",
+							"raw": "{{host}}:{{allocationPort}}/income/user/{{userId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -137,7 +217,7 @@
 							"path": [
 								"income",
 								"user",
-								"123"
+								"{{userId}}"
 							]
 						}
 					},
@@ -151,8 +231,9 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Test response and status\", function () {\r",
+									"    userId = pm.collectionVariables.get(\"userId\");\r",
 									"    pm.response.to.have.status(200);\r",
-									"    pm.response.to.have.body('{\"userId\":123,\"investment\":0,\"fixCosts\":[],\"categories\":[]}');\r",
+									"    pm.response.to.have.body('{\"userId\":'+userId+',\"investment\":0,\"fixCosts\":[],\"categories\":[]}');\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -175,7 +256,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{allocationPort}}/allocation/user/123",
+							"raw": "{{host}}:{{allocationPort}}/allocation/user/{{userId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -183,7 +264,7 @@
 							"path": [
 								"allocation",
 								"user",
-								"123"
+								"{{userId}}"
 							]
 						}
 					},
@@ -218,7 +299,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{allocationPort}}/allocation/user/123",
+							"raw": "{{host}}:{{allocationPort}}/allocation/user/{{userId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -226,7 +307,7 @@
 							"path": [
 								"allocation",
 								"user",
-								"123"
+								"{{userId}}"
 							]
 						}
 					},
@@ -261,7 +342,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}:{{expensePort}}/categories/user/123",
+							"raw": "{{host}}:{{expensePort}}/categories/user/{{userId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -269,7 +350,7 @@
 							"path": [
 								"categories",
 								"user",
-								"123"
+								"{{userId}}"
 							]
 						}
 					},
@@ -307,7 +388,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{allocationPort}}/allocation/user/123",
+							"raw": "{{host}}:{{allocationPort}}/allocation/user/{{userId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -315,7 +396,7 @@
 							"path": [
 								"allocation",
 								"user",
-								"123"
+								"{{userId}}"
 							]
 						}
 					},
@@ -351,7 +432,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{allocationPort}}/allocation/user/123",
+							"raw": "{{host}}:{{allocationPort}}/allocation/user/{{userId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -359,7 +440,7 @@
 							"path": [
 								"allocation",
 								"user",
-								"123"
+								"{{userId}}"
 							]
 						}
 					},
@@ -395,7 +476,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{allocationPort}}/allocation/user/123",
+							"raw": "{{host}}:{{allocationPort}}/allocation/user/{{userId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -403,7 +484,7 @@
 							"path": [
 								"allocation",
 								"user",
-								"123"
+								"{{userId}}"
 							]
 						}
 					},
@@ -439,7 +520,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{allocationPort}}/allocation/user/123",
+							"raw": "{{host}}:{{allocationPort}}/allocation/user/{{userId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -447,7 +528,7 @@
 							"path": [
 								"allocation",
 								"user",
-								"123"
+								"{{userId}}"
 							]
 						}
 					},
@@ -487,7 +568,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{expensePort}}/expense/user/123/accountName/{{girokontoName}}?overrideDefault=true",
+							"raw": "{{host}}:{{expensePort}}/expense/user/{{userId}}/accountName/{{girokontoName}}?overrideDefault=true",
 							"host": [
 								"{{host}}"
 							],
@@ -495,7 +576,7 @@
 							"path": [
 								"expense",
 								"user",
-								"123",
+								"{{userId}}",
 								"accountName",
 								"{{girokontoName}}"
 							],
@@ -526,9 +607,6 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "noauth"
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -541,7 +619,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{expensePort}}/expense/user/123/accountName/{{girokontoName}}?overrideDefault=false",
+							"raw": "{{host}}:{{expensePort}}/expense/user/{{userId}}/accountName/{{girokontoName}}?overrideDefault=false",
 							"host": [
 								"{{host}}"
 							],
@@ -549,7 +627,7 @@
 							"path": [
 								"expense",
 								"user",
-								"123",
+								"{{userId}}",
 								"accountName",
 								"{{girokontoName}}"
 							],
@@ -583,7 +661,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{host}}:{{expensePort}}/expense/user/123",
+							"raw": "{{host}}:{{expensePort}}/expense/user/{{userId}}",
 							"host": [
 								"{{host}}"
 							],
@@ -591,7 +669,7 @@
 							"path": [
 								"expense",
 								"user",
-								"123"
+								"{{userId}}"
 							]
 						}
 					},
@@ -615,9 +693,6 @@
 						}
 					],
 					"request": {
-						"auth": {
-							"type": "noauth"
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -689,7 +764,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/{{pathDepotEntry}}/{{depotName}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/{{pathDepotEntry}}/{{depotName}}",
 							"host": [
 								"{{host}}"
 							],
@@ -697,7 +772,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"{{pathDepotEntry}}",
 								"{{depotName}}"
 							]
@@ -735,7 +810,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -743,7 +818,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"transaction"
 							]
 						}
@@ -782,7 +857,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/{{pathDepotEntry}}/{{depotName}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/{{pathDepotEntry}}/{{depotName}}",
 							"host": [
 								"{{host}}"
 							],
@@ -790,7 +865,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"{{pathDepotEntry}}",
 								"{{depotName}}"
 							]
@@ -828,7 +903,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -836,7 +911,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"transaction"
 							]
 						}
@@ -875,7 +950,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/{{pathDepotEntry}}/{{depotName}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/{{pathDepotEntry}}/{{depotName}}",
 							"host": [
 								"{{host}}"
 							],
@@ -883,7 +958,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"{{pathDepotEntry}}",
 								"{{depotName}}"
 							]
@@ -921,7 +996,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -929,7 +1004,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"transaction"
 							]
 						}
@@ -968,7 +1043,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/{{pathDepotEntry}}/{{depotName}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/{{pathDepotEntry}}/{{depotName}}",
 							"host": [
 								"{{host}}"
 							],
@@ -976,7 +1051,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"{{pathDepotEntry}}",
 								"{{depotName}}"
 							]
@@ -1014,7 +1089,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -1022,7 +1097,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"transaction"
 							]
 						}
@@ -1061,7 +1136,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/{{pathDepotEntry}}/{{depotName}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/{{pathDepotEntry}}/{{depotName}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1069,7 +1144,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"{{pathDepotEntry}}",
 								"{{depotName}}"
 							]
@@ -1107,7 +1182,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -1115,7 +1190,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"transaction"
 							]
 						}
@@ -1154,7 +1229,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/{{pathDepotEntry}}/{{depotName}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/{{pathDepotEntry}}/{{depotName}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1162,7 +1237,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"{{pathDepotEntry}}",
 								"{{depotName}}"
 							]
@@ -1203,7 +1278,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/profit",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/profit",
 							"host": [
 								"{{host}}"
 							],
@@ -1211,7 +1286,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"profit"
 							]
 						}
@@ -1247,7 +1322,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -1255,7 +1330,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"transaction"
 							]
 						}
@@ -1294,7 +1369,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/{{pathDepotEntry}}/{{depotName}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/{{pathDepotEntry}}/{{depotName}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1302,7 +1377,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"{{pathDepotEntry}}",
 								"{{depotName}}"
 							]
@@ -1343,7 +1418,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/profit",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/profit",
 							"host": [
 								"{{host}}"
 							],
@@ -1351,7 +1426,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"profit"
 							]
 						}
@@ -1387,7 +1462,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -1395,7 +1470,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"transaction"
 							]
 						}
@@ -1434,7 +1509,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/{{pathDepotEntry}}/{{depotName}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/{{pathDepotEntry}}/{{depotName}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1442,7 +1517,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"{{pathDepotEntry}}",
 								"{{depotName}}"
 							]
@@ -1483,7 +1558,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/profit",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/profit",
 							"host": [
 								"{{host}}"
 							],
@@ -1491,7 +1566,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"profit"
 							]
 						}
@@ -1527,7 +1602,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -1535,7 +1610,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"transaction"
 							]
 						}
@@ -1574,7 +1649,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/{{pathDepotEntry}}/{{depotName}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/{{pathDepotEntry}}/{{depotName}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1582,7 +1657,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"{{pathDepotEntry}}",
 								"{{depotName}}"
 							]
@@ -1623,7 +1698,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/profit",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/profit",
 							"host": [
 								"{{host}}"
 							],
@@ -1631,7 +1706,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"profit"
 							]
 						}
@@ -1667,7 +1742,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -1675,7 +1750,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"transaction"
 							]
 						}
@@ -1714,7 +1789,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/{{pathDepotEntry}}/{{depotName}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/{{pathDepotEntry}}/{{depotName}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1722,7 +1797,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"{{pathDepotEntry}}",
 								"{{depotName}}"
 							]
@@ -1763,7 +1838,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/131990/profit",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInv}}/profit",
 							"host": [
 								"{{host}}"
 							],
@@ -1771,7 +1846,7 @@
 							"path": [
 								"investments",
 								"user",
-								"131990",
+								"{{userIdInv}}",
 								"profit"
 							]
 						}
@@ -1812,7 +1887,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/12345/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInveDivi}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -1820,7 +1895,7 @@
 							"path": [
 								"investments",
 								"user",
-								"12345",
+								"{{userIdInveDivi}}",
 								"transaction"
 							]
 						}
@@ -1856,7 +1931,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/12345/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInveDivi}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -1864,7 +1939,7 @@
 							"path": [
 								"investments",
 								"user",
-								"12345",
+								"{{userIdInveDivi}}",
 								"transaction"
 							]
 						}
@@ -1903,7 +1978,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/12345/{{pathDepotEntry}}/{{depotNameDividend}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInveDivi}}/{{pathDepotEntry}}/{{depotNameDividend}}",
 							"host": [
 								"{{host}}"
 							],
@@ -1911,7 +1986,7 @@
 							"path": [
 								"investments",
 								"user",
-								"12345",
+								"{{userIdInveDivi}}",
 								"{{pathDepotEntry}}",
 								"{{depotNameDividend}}"
 							]
@@ -1952,7 +2027,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/12345/profit",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInveDivi}}/profit",
 							"host": [
 								"{{host}}"
 							],
@@ -1960,7 +2035,7 @@
 							"path": [
 								"investments",
 								"user",
-								"12345",
+								"{{userIdInveDivi}}",
 								"profit"
 							]
 						}
@@ -1996,7 +2071,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/12345/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInveDivi}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -2004,7 +2079,7 @@
 							"path": [
 								"investments",
 								"user",
-								"12345",
+								"{{userIdInveDivi}}",
 								"transaction"
 							]
 						}
@@ -2043,7 +2118,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/12345/{{pathDepotEntry}}/{{depotNameDividend}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInveDivi}}/{{pathDepotEntry}}/{{depotNameDividend}}",
 							"host": [
 								"{{host}}"
 							],
@@ -2051,7 +2126,7 @@
 							"path": [
 								"investments",
 								"user",
-								"12345",
+								"{{userIdInveDivi}}",
 								"{{pathDepotEntry}}",
 								"{{depotNameDividend}}"
 							]
@@ -2092,7 +2167,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/12345/profit",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInveDivi}}/profit",
 							"host": [
 								"{{host}}"
 							],
@@ -2100,7 +2175,7 @@
 							"path": [
 								"investments",
 								"user",
-								"12345",
+								"{{userIdInveDivi}}",
 								"profit"
 							]
 						}
@@ -2136,7 +2211,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/12345/transaction",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInveDivi}}/transaction",
 							"host": [
 								"{{host}}"
 							],
@@ -2144,7 +2219,7 @@
 							"path": [
 								"investments",
 								"user",
-								"12345",
+								"{{userIdInveDivi}}",
 								"transaction"
 							]
 						}
@@ -2183,7 +2258,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/12345/{{pathDepotEntry}}/{{depotNameDividend}}",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInveDivi}}/{{pathDepotEntry}}/{{depotNameDividend}}",
 							"host": [
 								"{{host}}"
 							],
@@ -2191,7 +2266,7 @@
 							"path": [
 								"investments",
 								"user",
-								"12345",
+								"{{userIdInveDivi}}",
 								"{{pathDepotEntry}}",
 								"{{depotNameDividend}}"
 							]
@@ -2232,7 +2307,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{host}}:{{investmentPort}}/investments/user/12345/profit",
+							"raw": "{{host}}:{{investmentPort}}/investments/user/{{userIdInveDivi}}/profit",
 							"host": [
 								"{{host}}"
 							],
@@ -2240,7 +2315,7 @@
 							"path": [
 								"investments",
 								"user",
-								"12345",
+								"{{userIdInveDivi}}",
 								"profit"
 							]
 						}
@@ -2250,6 +2325,16 @@
 			]
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -2311,6 +2396,27 @@
 			"key": "allocationPort",
 			"value": "8085",
 			"type": "default"
+		},
+		{
+			"key": "userServicePort",
+			"value": "8068",
+			"type": "default"
+		},
+		{
+			"key": "userId",
+			"value": "123"
+		},
+		{
+			"key": "userIdInv",
+			"value": "123"
+		},
+		{
+			"key": "userIdInveDivi",
+			"value": "123"
+		},
+		{
+			"key": "token",
+			"value": ""
 		}
 	]
 }
