@@ -10,3 +10,6 @@
 [submodule "Eureka"]
 	path = Eureka
 	url = https://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@github.com/cscherhoff/Eureka
+[submodule "finance-user-service"]
+	path = finance-user-service
+	url = https://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@github.com/cscherhoff/finance-user-service

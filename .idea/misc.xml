@@ -10,6 +10,7 @@
         <option value="$PROJECT_DIR$/investment-service-kafka/pom.xml" />
         <option value="$PROJECT_DIR$/investment-service-kafka/investment-service/pom.xml" />
         <option value="$PROJECT_DIR$/Eureka/pom.xml" />
+        <option value="$PROJECT_DIR$/finance-user-service/pom.xml" />
       </list>
     </option>
   </component>

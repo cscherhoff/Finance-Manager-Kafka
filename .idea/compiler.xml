@@ -12,6 +12,7 @@
         <module name="investment-service-ms" />
         <module name="allocator-service" />
         <module name="expense-service" />
+        <module name="user-service" />
         <module name="naming-server" />
       </profile>
     </annotationProcessing>
@@ -23,6 +24,7 @@
       <module name="investment-service" target="9" />
       <module name="investment-service-ms" target="11" />
       <module name="naming-server" target="11" />
+      <module name="user-service" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -33,6 +35,8 @@
       <module name="expense-service" options="-parameters" />
       <module name="investment-service" options="-parameters" />
       <module name="investment-service-ms" options="-parameters" />
+      <module name="naming-server" options="-parameters" />
+      <module name="user-service" options="-parameters" />
     </option>
   </component>
 </project>
