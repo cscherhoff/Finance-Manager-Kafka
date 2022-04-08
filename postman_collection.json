@@ -364,8 +364,9 @@
 							"script": {
 								"exec": [
 									"pm.test(\"Test response and status\", function () {\r",
+									"    userId = pm.collectionVariables.get(\"userId\");\r",
 									"    pm.response.to.have.status(200);\r",
-									"    pm.response.to.have.body('{\"userId\":123,\"investment\":200.00,\"fixCosts\":[{\"fixCostName\":\"Miete\",\"amount\":540.27},{\"fixCostName\":\"Verein\",\"amount\":15.77}],\"categories\":[{\"categoryName\":\"Haushalt\",\"budget\":301.47},{\"categoryName\":\"Reisen\",\"budget\":99.25}]}');\r",
+									"    pm.response.to.have.body('{\"userId\":'+userId+',\"investment\":200.00,\"fixCosts\":[{\"fixCostName\":\"Miete\",\"amount\":540.27},{\"fixCostName\":\"Verein\",\"amount\":15.77}],\"categories\":[{\"categoryName\":\"Haushalt\",\"budget\":301.47},{\"categoryName\":\"Reisen\",\"budget\":99.25}]}');\r",
 									"});"
 								],
 								"type": "text/javascript"
@@ -2358,15 +2359,15 @@
 	"variable": [
 		{
 			"key": "expensePort",
-			"value": "8083"
+			"value": "8068"
 		},
 		{
 			"key": "investmentPort",
-			"value": "8069"
+			"value": "8068"
 		},
 		{
 			"key": "accountPort",
-			"value": "8082"
+			"value": "8068"
 		},
 		{
 			"key": "host",
@@ -2394,7 +2395,7 @@
 		},
 		{
 			"key": "allocationPort",
-			"value": "8085",
+			"value": "8068",
 			"type": "default"
 		},
 		{
@@ -2404,15 +2405,15 @@
 		},
 		{
 			"key": "userId",
-			"value": "123"
+			"value": "1"
 		},
 		{
 			"key": "userIdInv",
-			"value": "123"
+			"value": "1"
 		},
 		{
 			"key": "userIdInveDivi",
-			"value": "123"
+			"value": "1"
 		},
 		{
 			"key": "token",
