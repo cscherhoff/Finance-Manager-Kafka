@@ -8,10 +8,11 @@
         <outputRelativeToContentRoot value="true" />
         <module name="allocator-service-ms" />
         <module name="expense-manager-ms" />
+        <module name="investment-service" />
         <module name="investment-service-ms" />
         <module name="allocator-service" />
         <module name="expense-service" />
-        <module name="investment-service" />
+        <module name="naming-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -21,6 +22,7 @@
       <module name="expense-service" target="11" />
       <module name="investment-service" target="9" />
       <module name="investment-service-ms" target="11" />
+      <module name="naming-server" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

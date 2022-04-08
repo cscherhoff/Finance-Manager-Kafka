@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/expense-manager-ms/expense-service/expense-service.iml" filepath="$PROJECT_DIR$/expense-manager-ms/expense-service/expense-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/investment-service-kafka/investment-service/investment-service.iml" filepath="$PROJECT_DIR$/investment-service-kafka/investment-service/investment-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/investment-service-kafka/investment-service-ms.iml" filepath="$PROJECT_DIR$/investment-service-kafka/investment-service-ms.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Eureka/naming-server.iml" filepath="$PROJECT_DIR$/Eureka/naming-server.iml" />
     </modules>
   </component>
 </project>
