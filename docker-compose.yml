@@ -45,6 +45,22 @@ services:
       spring.datasource.username: root
       spring.datasource.password: root
       spring.kafka.consumer.bootstrap-servers: kafka:29092
+  naming-service:
+    restart: on-failure
+    build: .\Eureka
+    ports:
+      - 8761:8761
+    container_name: eureka-finance
+  user-service:
+    restart: on-failure
+    build: .\finance-user-service
+    ports:
+      - 8068:8068
+    container_name: user-service
+    environment:
+      spring.datasource.url: jdbc:mysql://database-service:3306/finance_kafka_test?characterEncoding=utf8&serverTimezone=CET&createDatabaseIfNotExist=true
+      spring.datasource.username: root
+      spring.datasource.password: root
   zookeeper:
     image: confluentinc/cp-zookeeper:latest
     environment:
