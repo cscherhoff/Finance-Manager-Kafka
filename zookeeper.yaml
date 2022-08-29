@@ -14,7 +14,7 @@ spec:
         app: zookeeper
     spec:
       containers:
-      - image: confluentinc/cp-zookeeper:latest
+      - image: confluentinc/cp-zookeeper:7.2.0
         name: zookeeper
         env:
         - name: ZOOKEEPER_CLIENT_PORT
